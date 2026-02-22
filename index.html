@@ -3,42 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tennis Score Keeper</title>
+    <title>Christmas Gift Helper</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Tennis Score</h1>
+    <header>
+        <div class="header-content">
+            <span class="header-icon">🎄</span>
+            <h1>Christmas Gift Helper</h1>
+            <span class="header-icon">🎁</span>
+        </div>
+        <p class="subtitle">Find the perfect gift for everyone on your list</p>
+    </header>
 
-        <div class="match-score">
-            <span id="games1">0</span> - <span id="games2">0</span>
-            <div class="match-label">Games</div>
+    <div class="tabs">
+        <button class="tab active" data-tab="people">My List</button>
+        <button class="tab" data-tab="find">Find Gifts</button>
+        <button class="tab" data-tab="saved">Saved Ideas <span class="badge" id="savedBadge">0</span></button>
+    </div>
+
+    <!-- MY LIST TAB -->
+    <div id="tab-people" class="tab-content active">
+        <div class="card">
+            <h2>Add a Person</h2>
+            <form id="personForm">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="personName" placeholder="e.g. Grandma, Alex..." required>
+                </div>
+                <div class="form-group">
+                    <label>Relationship</label>
+                    <select id="personRelationship">
+                        <option value="parent">Parent</option>
+                        <option value="sibling">Sibling</option>
+                        <option value="child">Child</option>
+                        <option value="partner">Partner</option>
+                        <option value="friend">Friend</option>
+                        <option value="colleague">Colleague</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Age Group</label>
+                    <select id="personAge">
+                        <option value="child">Child (under 12)</option>
+                        <option value="teen">Teen (13-17)</option>
+                        <option value="youngAdult">Young Adult (18-30)</option>
+                        <option value="adult" selected>Adult (31-60)</option>
+                        <option value="senior">Senior (60+)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Budget</label>
+                    <div class="budget-options">
+                        <label class="radio-label"><input type="radio" name="budget" value="under25"> Under £25</label>
+                        <label class="radio-label"><input type="radio" name="budget" value="25to50" checked> £25–£50</label>
+                        <label class="radio-label"><input type="radio" name="budget" value="50to100"> £50–£100</label>
+                        <label class="radio-label"><input type="radio" name="budget" value="over100"> Over £100</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Interests (select all that apply)</label>
+                    <div class="interests-grid">
+                        <label class="checkbox-label"><input type="checkbox" value="tech"> Tech</label>
+                        <label class="checkbox-label"><input type="checkbox" value="books"> Books</label>
+                        <label class="checkbox-label"><input type="checkbox" value="gaming"> Gaming</label>
+                        <label class="checkbox-label"><input type="checkbox" value="cooking"> Cooking</label>
+                        <label class="checkbox-label"><input type="checkbox" value="fitness"> Fitness</label>
+                        <label class="checkbox-label"><input type="checkbox" value="fashion"> Fashion</label>
+                        <label class="checkbox-label"><input type="checkbox" value="music"> Music</label>
+                        <label class="checkbox-label"><input type="checkbox" value="travel"> Travel</label>
+                        <label class="checkbox-label"><input type="checkbox" value="home"> Home & Garden</label>
+                        <label class="checkbox-label"><input type="checkbox" value="art"> Art & Craft</label>
+                        <label class="checkbox-label"><input type="checkbox" value="outdoors"> Outdoors</label>
+                        <label class="checkbox-label"><input type="checkbox" value="food"> Food & Drink</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Add to My List</button>
+            </form>
         </div>
 
-        <div class="scoreboard">
-            <div class="team team1">
-                <h2>Team 1</h2>
-                <div class="score" id="score1">0</div>
-                <button onclick="scorePoint(1)">Point</button>
-            </div>
+        <div id="peopleList"></div>
+    </div>
 
-            <div class="vs">vs</div>
-
-            <div class="team team2">
-                <h2>Team 2</h2>
-                <div class="score" id="score2">0</div>
-                <button onclick="scorePoint(2)">Point</button>
+    <!-- FIND GIFTS TAB -->
+    <div id="tab-find" class="tab-content">
+        <div class="card">
+            <h2>Browse Gift Ideas</h2>
+            <div class="filter-row">
+                <select id="filterAge">
+                    <option value="">Any Age</option>
+                    <option value="child">Children</option>
+                    <option value="teen">Teens</option>
+                    <option value="youngAdult">Young Adults</option>
+                    <option value="adult">Adults</option>
+                    <option value="senior">Seniors</option>
+                </select>
+                <select id="filterBudget">
+                    <option value="">Any Budget</option>
+                    <option value="under25">Under £25</option>
+                    <option value="25to50">£25–£50</option>
+                    <option value="50to100">£50–£100</option>
+                    <option value="over100">Over £100</option>
+                </select>
+                <select id="filterCategory">
+                    <option value="">All Categories</option>
+                    <option value="tech">Tech</option>
+                    <option value="books">Books</option>
+                    <option value="gaming">Gaming</option>
+                    <option value="cooking">Cooking</option>
+                    <option value="fitness">Fitness</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="music">Music</option>
+                    <option value="home">Home & Garden</option>
+                    <option value="art">Art & Craft</option>
+                    <option value="outdoors">Outdoors</option>
+                    <option value="food">Food & Drink</option>
+                </select>
+                <input type="text" id="filterSearch" placeholder="Search gifts...">
             </div>
         </div>
+        <div id="giftGrid" class="gift-grid"></div>
+    </div>
 
-        <div id="message" class="message"></div>
+    <!-- SAVED IDEAS TAB -->
+    <div id="tab-saved" class="tab-content">
+        <div class="card">
+            <h2>Saved Gift Ideas</h2>
+            <p class="hint">Save ideas from the Browse tab, then assign them to people on your list.</p>
+        </div>
+        <div id="savedList"></div>
+        <div id="emptyState" class="empty-state">
+            <div class="empty-icon">🎁</div>
+            <p>No saved ideas yet — browse gifts and click Save!</p>
+        </div>
+    </div>
 
-        <div class="voice-status" id="voiceStatus">Voice: Off</div>
-
-        <div class="controls">
-            <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">Start Voice</button>
-            <button class="reset-btn" onclick="resetGame()">New Game</button>
-            <button class="reset-btn" onclick="resetMatch()">New Match</button>
+    <!-- GIFT SUGGESTIONS MODAL -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Gift Suggestions</h2>
+                <button class="close-btn" onclick="closeModal()">✕</button>
+            </div>
+            <div id="modalBody"></div>
         </div>
     </div>
 
